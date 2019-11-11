@@ -162,7 +162,7 @@ function thermoRegulator() {
 	// turnLedOn(thermoRegulatorWarningLed);
 	const led = new Led(13);
 	
-	led.blink();
+	led.on();
 }
 
 // This function specifies, a set of actions to take.
