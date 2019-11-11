@@ -3,15 +3,7 @@ var board = new five.Board();
 
 board.on("ready", function() {
 
-    var lcd = new five.LCD({
-        controller: "JHD1313M1"
-    });
+    var lcd = new five.LCD({ pins: [7, 8, 9, 10, 11, 12] });
 
-    lcd.useChar("heart");
-
-    lcd.cursor(0, 0).print("hello :heart:");
-
-    lcd.blink();
-
-    lcd.cursor(1, 0).print("Blinking? ");
+    lcd.print("Hello");
 });
