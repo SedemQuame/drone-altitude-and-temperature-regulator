@@ -1,0 +1,4 @@
+# ECHO is on.
+# Don't track content of these folders
+node_modules/
+drone_control_system/
