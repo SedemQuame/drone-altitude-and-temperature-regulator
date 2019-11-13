@@ -10,9 +10,10 @@ board.on("ready", function() {
     controller: "PCF8574T"
   });
 
-  led.useChar("heart");
-  led.cursor(0, 0).print("hello :heart:");
-  led.blink();
-  led.cursor(1, 0).print("Blinking? ");
-  led.cursor(0, 10).print(random);
+  //led.useChar("heart");
+  //led.cursor(0, 0).print("hello :heart:");
+  //led.blink();
+  //led.cursor(1, 0).print("Blinking? ");
+  //led.cursor(0, 10).print(random);
+  led.print("Leave Me Alone");
 });

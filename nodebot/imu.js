@@ -4,12 +4,6 @@ const {Board, IMU, Led} = require("johnny-five");
 const board = new Board();
 
 const sleep = require("sleep")
-
-// Initializing LCD board.
-/*const lcd = new five.LCD({
-    controller: "JHD1313M1"
-});*/
-
 // Declaring acceptable metrics for temperature, acceleration and direction.
 // The above metrics are, that of the phantom advance 3 drone
 
@@ -46,8 +40,18 @@ board.on("ready", () => {
     const imu = new IMU({
         controller: "MPU6050"
     });
+    
+    
+	// Controller: PCF8574A (Generic I2C)
+	// Locate the controller chip model number on the chip itself.
+  	const lcd = new five.LCD({
+   	 controller: "PCF8574T"
+  	});
 
     imu.on("change", () => {
+			// Meek Mills
+			samplePrint(lcd);    	
+    	
         // Printing values.
         printDetails(imu);
 		  sleep.sleep(1);
@@ -68,6 +72,8 @@ board.on("ready", () => {
 		  }
 		  
 		  sleep.sleep(1);
+		  
+		  
     });
 
 });
@@ -118,40 +124,94 @@ function printDetails(imu) {
     console.log("--------------------------------------");
 }
 
+function holdAndClear(x){
+	sleep.sleep(x);
+	lcd.clear;
+}
+
+function samplePrint (lcd) {
+	lcd.print("Meek Mills");
+}
+
 // This function is used, for printing data on the LCD.
 function printDetailsOnLCD() {
     lcd.print("Drone Regulator System");
-    lcd.clear();
+    holdAndClear(5);
 
     // Printing temperature in Celsius.
     lcd.cursor(0, 0).print("Thermometer"); // The starting position of the LCD display.
     lcd.cursor(0, 1).print("Celsius : ", imu.thermometer.celsius);
+    holdAndClear(1);
 
     // Pause
     lcd.cursor(0, 0).print("Accelerometer");
     lcd.cursor(0, 1).print("X : ", imu.accelerometer.x);
+    holdAndClear(1);    
 
-    lcd.cursor(0, 0).print("Accelerometer");
+    lcd.cursor(0, 0).print("Accelerometer Y");
     lcd.cursor(0, 1).print("Y : ", imu.accelerometer.y);
+    holdAndClear(1);
 
-    lcd.cursor(0, 0).print("Accelerometer");
+    lcd.cursor(0, 0).print("Accelerometer Z");
     lcd.cursor(0, 1).print("Z : ", imu.accelerometer.z);
-
-    lcd.cursor(0, 0).print("Accelerometer");
+    holdAndClear(1);
+    
+    lcd.cursor(0, 0).print("Accelerometer Pitch");
     lcd.cursor(0, 1).print("pitch : ", imu.accelerometer.pitch);
-
-    lcd.cursor(0, 0).print("Accelerometer");
+    holdAndClear(1);
+    
+    lcd.cursor(0, 0).print("Accelerometer Roll");
     lcd.cursor(0, 1).print("roll : ", imu.accelerometer.roll);
-
-    lcd.cursor(0, 0).print("Accelerometer");
+    holdAndClear(1);
+    
+    lcd.cursor(0, 0).print("Accelerometer Yaw");
     lcd.cursor(0, 1).print("yaw : ", imu.accelerometer.yaw);
-
-    lcd.cursor(0, 0).print("Accelerometer");
+    holdAndClear(1);
+    
+    lcd.cursor(0, 0).print("Accelerometer Rate");
     lcd.cursor(0, 1).print("rate : ", imu.accelerometer.rate);
-
-    lcd.cursor(0, 0).print("Accelerometer");
+    holdAndClear(1);
+    
+    lcd.cursor(0, 0).print("Accelerometer Calibrated?");
     lcd.cursor(0, 1).print("isCalibrated : ", imu.accelerometer.isCalibrated);
-
+    holdAndClear(1);    
+    
+	// Printing Gyro Data.
+	lcd.cursor(0, 0).print("Gyroscope");
+   lcd.cursor(0, 1).print("  x            : ", imu.gyro.x);
+   holdAndClear(1);
+        
+	lcd.cursor(0, 0).print("Gyroscope");
+   lcd.cursor(0, 1).print("  y            : ", imu.gyro.y);
+   holdAndClear(1);
+       
+   lcd.cursor(0, 0).print("Gyroscope"); 
+   lcd.cursor(0, 1).print("  z            : ", imu.gyro.z);
+   holdAndClear(1);
+    
+	lcd.cursor(0, 0).print("Gyroscope");    
+   lcd.cursor(0, 1).print("  pitch        : ", imu.gyro.pitch);
+   holdAndClear(1);
+    
+	lcd.cursor(0, 0).print("Gyroscope");    
+   lcd.cursor(0, 1).print("  roll         : ", imu.gyro.roll);
+   holdAndClear(1);
+    
+	lcd.cursor(0, 0).print("Gyroscope");    
+   lcd.cursor(0, 1).print("  yaw          : ", imu.gyro.yaw);
+   holdAndClear(1);
+    
+	lcd.cursor(0, 0).print("Gyroscope");    
+   lcd.cursor(0, 1).print("  rate         : ", imu.gyro.rate);
+   holdAndClear(1);
+        
+	lcd.cursor(0, 0).print("Gyroscope");
+   lcd.cursor(0, 1).print("  isCalibrated : ", imu.gyro.isCalibrated);
+   holdAndClear(1);
+    
+	lcd.cursor(0, 0).print("Gyroscope");    
+   lcd.cursor(0, 1).print("--------------------------------------");
+   holdAndClear(1);
 }
 
 

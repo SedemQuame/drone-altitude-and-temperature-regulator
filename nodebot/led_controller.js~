@@ -2,15 +2,18 @@ var five = require("johnny-five");
 var board = new five.Board();
 
 board.on("ready", function() {
+  var random = Math.random().toString(36).replace(/[^a-z]+/g, "").substr(0, 4).toUpperCase();
+
   // Controller: PCF8574A (Generic I2C)
   // Locate the controller chip model number on the chip itself.
   var led = new five.LCD({
     controller: "PCF8574T"
   });
 
-  led.useChar("heart");
-  led.cursor(0, 0).print("hello :heart:");
-  led.blink();
-  led.cursor(1, 0).print("Blinking? ");
-  led.cursor(0, 10).print(random);
+  //led.useChar("heart");
+  //led.cursor(0, 0).print("hello :heart:");
+  //led.blink();
+  //led.cursor(1, 0).print("Blinking? ");
+  //led.cursor(0, 10).print(random);
+  led.print("Hello World");
 });
